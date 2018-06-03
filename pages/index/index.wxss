@@ -13,9 +13,10 @@
 }
 
 .userinfo-nickname {
-  color: #aaa;
+  color: blueviolet;
 }
 
 .usermotto {
   margin-top: 200px;
+  color: greenyellow;
 }
