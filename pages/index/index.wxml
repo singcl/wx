@@ -1,13 +1,37 @@
-<!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+<view class="loading" hidden="{{rankList.length > 0}}">
+  <view class="loading">
+    <view class="loading__el"></view>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
+</view>
+
+<view class="rank" hidden="{{rankList.length <= 0}}">
+  <view class="rank__banner">
+    <view class="rank__title">流行趋势排行</view>
+    <view class="rank__item rank__item--first">
+      <image class="rank__icon rank__icon--first" lazy-load="true" src="{{rankList[0].icon}}"></image>
+      <view class="rank__info">
+        <view class="rank__name">{{rankList[0].name}}</view>
+        <view class="rank__detail">{{rankList[0].detail}}</view>
+      </view>
+    </view>
   </view>
+</view>
+
+<view class="rank__list">
+  <view class="rank__item {{index === rankList.length - 1 ? 'rank__item--last' : ''}}" 
+    wx:for="{{rankList}}"
+    wx:for-index="index"
+    wx:for-item="item"
+    wx:key="id"
+    wx:if="{{index > 0}}"
+    data-index="{{index}}"
+    bindtap="tapRankItem">
+    <view class="rank__no">{{index + 1}}</view>
+    <image class="rank__icon" lazy-load="true" src="{{item.icon}}" />
+    <view class="rank__info">
+      <view class="rank__name">{{item.name}}</view>
+      <view class="rank__detail {{item.open ? '' : 'rank__detail--close'}}">{{item.detail}}</view>
+    </view>
+  </view>
+  <view class="rank__tip">数据来源 www.awesomes.cn</view>
 </view>
